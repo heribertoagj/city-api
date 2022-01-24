@@ -1,0 +1,53 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.6'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.dio.heribertoagj'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('testcontainersVersion', "1.16.0")
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.6'
+	implementation 'org.springframework.boot:spring-boot-starter-validation:2.5.6'
+	implementation 'org.springframework.boot:spring-boot-starter-web:2.5.6'
+	implementation 'com.vladmihalcea:hibernate-types-52:2.14.0'
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+
+	compileOnly 'org.projectlombok:lombok:1.18.22'
+	runtimeOnly 'com.h2database:h2:1.4.200'
+	implementation 'org.postgresql:postgresql'
+    //runtimeOnly 'org.postgresql:postgresql:42.3.1'
+	annotationProcessor 'org.projectlombok:lombok:1.18.22'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.6'
+	testImplementation 'org.testcontainers:junit-jupiter:1.16.2'
+	testImplementation 'org.testcontainers:postgresql:1.16.0'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
